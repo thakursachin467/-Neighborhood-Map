@@ -1,0 +1,30 @@
+#container{
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  margin-top:50px;
+}
+#map-container{
+  position: relative;
+  height: 100%;
+}
+#map{
+	height: 80%;
+    overflow: hidden;
+    padding-bottom: 22.25%;
+    padding-top: 30px;
+    position: relative;
+    
+}
+ #pac-input:focus {
+        border-color: #4d90fe;
+        text-overflow: ellipsis;
+      }
+
+html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
