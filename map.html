@@ -39,6 +39,9 @@
       <form class="navbar-form navbar-left" id="form-container" >
         <div class="form-group">
           <input id="pac-input" class="form-control" type="text" placeholder="Search hotels,food etc">
+          <input type="checkbox" id="use-strict-bounds" value=""  >
+          <label >Restricted Search In TRICITY</label>
+
         </div>
         <!--<button type="submit" class="btn btn-default"  onclick="loadData();" >Submit</button> -->
       </form>
@@ -59,16 +62,20 @@
 
 var input = document.getElementById('pac-input');
 
-var searchBox = new google.maps.places.SearchBox(input); 
+var searchBox = new google.maps.places.Autocomplete(input); 
+searchBox.bindTo('bounds', map);
+document.getElementById('use-strict-bounds')
+            .addEventListener('click', function() {
+              console.log('Checkbox clicked! New state=' + this.checked);
+              searchBox.setOptions({strictBounds: this.checked});
+            }); 
  
 
 
-      }
 
 
 
-
-
+  }
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtO7ZP74l7NLZvLu_86FfW3QB0tVBJVo8&libraries=places&callback=myMap"
          async defer></script>
