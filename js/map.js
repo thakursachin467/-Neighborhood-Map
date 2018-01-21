@@ -9,14 +9,14 @@ var loc=[
          {
             title:'Elante Mall',
             location:[30.7058034,76.7987666],
-            bio: ' Elante Mall SCO 178A, Industrial Area Phase 1, MW Area, Industrial Area Phase I, Chandigarh, 160002' ,
+            bio: ' Elante Mall SCO 178A, Industrial Area Phase 1, MW Area, Industrial Area Phase I' ,
             show:true,
             selected:false
          },
          {
             title:'Rock Garden',
             location:[30.7524165,76.8050706],
-            bio:'Rock Garden The Rock Garden of Chandigarh is a sculpture garden in Chandigarh, India, also known as Nek Chand Rock Garden after its founder Nek Chand, a government official who started the garden secretly in his spare time in 1957.',
+            bio:'Rock Garden The Rock Garden of Chandigarh is a sculpture garden in Chandigarh, India, also known as Nek Chand Rock Garden after its founder Nek Chand',
             show:true,
             selected:false
          },
@@ -30,7 +30,7 @@ var loc=[
          {
             title:'Sukhna Lake',
             location:[30.7420933,76.8127027],
-            bio: 'Sukhna Lake Sukhna Lake in Chandigarh, India, is a reservoir at the foothills of the Himalayas. This 3 km² rainfed lake was created in 1958 by damming the Sukhna Choe, a seasonal stream coming down from the Shivalik Hills',
+            bio: 'Sukhna Lake Sukhna Lake in Chandigarh, India, is a reservoir at the foothills of the Himalayas.',
             show:true,
             selected:false
          }
@@ -45,13 +45,11 @@ function myMap() {
           mapTypeId: 'roadmap'
         });
 var input = document.getElementById('pac-input');
-var searchBox = new google.maps.places.Autocomplete(input); 
-searchBox.bindTo('bounds', map);
+
  document.getElementById('use-strict-bounds')
             .addEventListener('click', function() {
               searchBox.setOptions({strictBounds: this.checked});
             }); 
-
             ko.applyBindings(new mapModel);
 }
 
@@ -60,9 +58,20 @@ searchBox.bindTo('bounds', map);
 
 var mapModel= function(){
     var self=this;
+    self.Input= ko.observable();
      var bounds = new google.maps.LatLngBounds();
      self.locations=[];
      var selected=false;
+
+
+     //fetching data from wiki
+
+
+
+
+
+
+
      for(var i=0;i<loc.length;i++) {
                var marker = new google.maps.Marker ({
                  position : {lat: loc[i].location[0], lng: loc[i].location[1]},
@@ -70,21 +79,25 @@ var mapModel= function(){
                 title: loc[i].title,
                 animation: google.maps.Animation.DROP,
                 show: ko.observable(loc[i].show),
-                selected: ko.observable(loc[i].selected),
                 description:loc[i].bio
      });
-         self.locations.push(marker);
-            marker.addListener('click', function() {
-            console.log(this.title);
-            contentString='<div>' + '<h3>' + this.title + '</h3>' +'<p>'+this.description+'</p>'+ '</div>'
-            var infowindow = new google.maps.InfoWindow({
-                content: contentString
-            });
-            infowindow.open(map, this);
+
+            
+            self.locations.push(marker);
+        
+            var infowindow = new google.maps.InfoWindow({ maxWidth: 200 });
+            marker.addListener('click',  function() {
+            infowindow.setContent('<div>' + '<h3>' + this.title + '</h3>' +'<p>'+this.description+'</p>'+ '</div>')
+           infowindow.open(map, this);
             
         });
                    
      }
+
+
+
+     
+
 
 
       
