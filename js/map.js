@@ -1,38 +1,43 @@
 
 var loc=[
-       { title:'Piccadily Square Mall',
-        location:[30.7235273,76.7652874],
-        bio: 'Piccadily Square Mall, Sub. Center, Sector 34A, Sub. City Center, Sector 34A, Sector 34, Chandigarh, 160022',
+       { title:'uncle jacks',
+        location:[30.7409173384,76.7971969396],
+        bio: 'Address: No.10, Booths, B, 35 Market Rd, Market 35 D, Sector 35D, Sector 8, Chandigarh, 160022',
          show:true,
-         selected:false
+         selected:false,
+         res_id: "57823cf6498e4ac40e94e786"
      },
          {
-            title:'Elante Mall',
-            location:[30.7058034,76.7987666],
-            bio: ' Elante Mall SCO 178A, Industrial Area Phase 1, MW Area, Industrial Area Phase I' ,
+            title:'Super Donuts',
+            location:[30.71081056728752,76.72193884849548],
+            bio: 'Address:SCO 130, Phase 3B2' ,
             show:true,
-            selected:false
+            selected:false,
+            res_id:"56092f77498e5344ab6f0d9b"
          },
          {
-            title:'Rock Garden',
-            location:[30.7524165,76.8050706],
-            bio:'Rock Garden The Rock Garden of Chandigarh is a sculpture garden in Chandigarh, India, also known as Nek Chand Rock Garden after its founder Nek Chand',
+            title:'TGI Fridays',
+            location:[30.7248164681,76.8060579523],
+            bio:'Address: Sector, Madhya Marg, 9D, Sector 26 East, Chandigarh, 160021',
             show:true,
-            selected:false
+            selected:false,
+            res_id:"584c2ba16ad73d05c6750a2d"
          },
          {
-            title:'Student Centre (Stu C)',
-            location:[30.7623095,76.7671159],
-            bio: 'Student Centre (Stu C) Panjab University, Sector 14, Chandigarh, 160014 puchd.ac.in',
+            title:'Hops n Grains',
+            location:[30.6978586000,76.8492580000],
+            bio: 'Address: SCO 358,, Sector - 9, Panchkula, Haryana 134109',
             show:true,
-            selected:false
+            selected:false,
+            res_id: "4d1f20ec2eb1f04ded06e6c1"
          },
          {
-            title:'Sukhna Lake',
-            location:[30.7420933,76.8127027],
-            bio: 'Sukhna Lake Sukhna Lake in Chandigarh, India, is a reservoir at the foothills of the Himalayas.',
+            title:'Barbeque Nation',
+            location:[30.7255055848,76.8051684648],
+            bio: 'Address:SCO 39, Madhya Marg, Sector 26, Chandigarh',
             show:true,
-            selected:false
+            selected:false,
+            res_id: "4bbf61eef353d13a29837e10"
          }
 
 ];
@@ -63,32 +68,43 @@ var mapModel= function(){
      self.locations=[];
      var selected=false;
 
-
-     //fetching data from wiki
-
-
-
-
-
-
-
-     for(var i=0;i<loc.length;i++) {
+               for(var i=0;i<loc.length;i++) {
                var marker = new google.maps.Marker ({
                  position : {lat: loc[i].location[0], lng: loc[i].location[1]},
                  map : map,
                 title: loc[i].title,
                 animation: google.maps.Animation.DROP,
                 show: ko.observable(loc[i].show),
-                description:loc[i].bio
+                description:loc[i].bio,
+                id:loc[i].res_id
      });
-
             
             self.locations.push(marker);
         
             var infowindow = new google.maps.InfoWindow({ maxWidth: 200 });
             marker.addListener('click',  function() {
-            infowindow.setContent('<div>' + '<h3>' + this.title + '</h3>' +'<p>'+this.description+'</p>'+ '</div>')
+
+
+                $.ajax({
+                datatype:"JSON",
+                url:"https://api.foursquare.com/v2/venues/" + this.id + "?oauth_token=N2N4Y4QP2CO4JJVJO0AALN5TJISJWPUCOOFPFAOQFBW2LB5T&v=20180127",
+                success: function(result) {
+                    successmsg="data captured";
+                    console.log(successmsg);
+                },
+                error: function(data) {
+                    successmsg="error data not found";
+                    console.log(successmsg);
+
+                }
+
+                
+
+     }) 
+            
+            infowindow.setContent('<div>' + '<h3>' + this.title + '</h3>' +'<p>'+this.description+'</p>'+  '</div>')
            infowindow.open(map, this);
+
             
         });
                    
