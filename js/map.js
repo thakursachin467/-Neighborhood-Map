@@ -62,7 +62,9 @@ var input = document.getElementById('pac-input');
 
 
 var mapModel= function(){
+     
     var self=this;
+    var data=this.data;
     self.Input= ko.observable();
      var bounds = new google.maps.LatLngBounds();
      self.locations=[];
@@ -77,37 +79,54 @@ var mapModel= function(){
                 show: ko.observable(loc[i].show),
                 description:loc[i].bio,
                 id:loc[i].res_id
-     });
-            
-            self.locations.push(marker);
-        
-            var infowindow = new google.maps.InfoWindow({ maxWidth: 200 });
-            marker.addListener('click',  function() {
-
-
-                $.ajax({
-                datatype:"JSON",
-                url:"https://api.foursquare.com/v2/venues/" + this.id + "?oauth_token=N2N4Y4QP2CO4JJVJO0AALN5TJISJWPUCOOFPFAOQFBW2LB5T&v=20180127",
-                success: function(result) {
-                    successmsg="data captured";
-                    console.log(successmsg);
-                },
-                error: function(data) {
-                    successmsg="error data not found";
-                    console.log(successmsg);
-
-                }
-
                 
+     });
 
-     }) 
+        
+            self.locations.push(marker);
             
-            infowindow.setContent('<div>' + '<h3>' + this.title + '</h3>' +'<p>'+this.description+'</p>'+  '</div>')
-           infowindow.open(map, this);
+            var infowindow = new google.maps.InfoWindow({ maxWidth: 200 });
+
+            marker.addListener('click',  function() {
+            var marid=this.id;
+            self.likerequest(marid,marker);
+            infowindow.open(map, this);
 
             
         });
                    
+     }
+
+     self.likerequest=function(marid,marker) {
+        $.ajax({
+                datatype:"JSON",
+                url:"https://api.foursquare.com/v2/venues/" + marid+ "?oauth_token=N2N4Y4QP2CO4JJVJO0AALN5TJISJWPUCOOFPFAOQFBW2LB5T&v=20180127",
+                success: function(result) {
+                    var mydata=result.response.venue;
+                    if(mydata.hasOwnProperty('likes')) {
+                        data=mydata.likes.summary;
+                        console.log(data);
+
+
+
+                    }
+                    if(data==" "|| data == undefined)
+                    {
+                    infowindow.setContent('<div>' + '<h3>' + marker.title + '</h3>' +'<p>'+marker.description+'</p>'+ '<p>'+ "NO LIKES "+ '</p>' +'</div>')
+   
+                    }
+                    else{
+                    infowindow.setContent('<div>' + '<h3>' + marker.title + '</h3>' +'<p>'+marker.description+'</p>'+ '<p>'+ data + '</p>' +'</div>')
+
+                    }
+                    }
+
+                
+
+     }) 
+
+
+
      }
 
 
