@@ -139,6 +139,16 @@ var mapModel = function() {
             }
         }
     }
+
+    //function to show all markers
+    function myFunction2() {
+        infowindow.close();
+        for (var i = 0; i < self.locations.length; i++) {
+            self.locations[i].setMap(map);
+
+        }
+    }
+
     //function to call foursquare api
     self.apicall = function(marker) {
         $.ajax({
@@ -197,6 +207,7 @@ var mapModel = function() {
     //HERE CLICK EVENTS ARE PERFORMED TO SORT THE LIST BASED ON SHOPPING AND FOOD 
     document.getElementById('shop').addEventListener('click', myFunction);
     document.getElementById('food').addEventListener('click', myFunction1);
+    document.getElementById('showAll').addEventListener('click', myFunction2);
 
 
 }
