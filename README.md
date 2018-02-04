@@ -31,4 +31,4 @@ Open index.html
 The Popular places bar has all the listed places . 
 Click on any location and a infowindow will pop up which will have a link to the place's wikipedia page.
 you can also sort locations based on the 2 categories i.e. food and shopping
-or simply click on the link https://thakursachin467.github.io/-Neighborhood-Map/
+
