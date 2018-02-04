@@ -75,7 +75,7 @@ function myMap() {
         zoom: 12,
         mapTypeId: 'roadmap'
     });
-    ko.applyBindings(new mapModel);
+    ko.applyBindings(new mapModel());
 
 }
 var mapModel = function() {
@@ -110,10 +110,10 @@ var mapModel = function() {
     //refered link https://stackoverflow.com/questions/40739353/google-maps-animate-particular-marker-on-click
     function startAnimation(marker) {
         marker.setAnimation(google.maps.Animation.BOUNCE);
-        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png')
+        marker.setIcon('http://maps.google.com/mapfiles/ms/icons/green-dot.png');
 
         setTimeout(function() {
-            marker.setAnimation(null)
+            marker.setAnimation(null);
         }, 2000);
     }
     //function to show only shopping places
@@ -176,7 +176,7 @@ var mapModel = function() {
 
     };
     //loop to alter through the click events to add info to the marker
-    for (var i = 0; i < self.locations.length; i++) {
+    for (var j = 0; j < self.locations.length; j++) {
         (function(marker) {
             self.apicall(marker);
             marker.addListener('click', function() {
@@ -185,18 +185,18 @@ var mapModel = function() {
             });
 
 
-        }(self.locations[i]));
+        })(self.locations[j]);
     }
 
     //here the contents will be added to the marker which is collected from foursqare and stored data
     self.adddatatomarker = function(marker) {
         startAnimation(marker);
 
-        if (marker.data == " " || marker.data == undefined) {
-            infowindow.setContent('<div>' + '<h3>' + marker.title + '</h3>' + '<p>' + marker.description + '</p>' + '<p>' + "NO LIKES " + '</p>' + '<p>' + 'checkins:' + marker.checkinsCount + '</p>' + '</div>')
+        if (marker.data == " " || marker.data == 'undefined') {
+            infowindow.setContent('<div>' + '<h3>' + marker.title + '</h3>' + '<p>' + marker.description + '</p>' + '<p>' + "NO LIKES " + '</p>' + '<p>' + 'checkins:' + marker.checkinsCount + '</p>' + '</div>');
 
         } else {
-            infowindow.setContent('<div>' + '<h3>' + marker.title + '</h3>' + '<p>' + marker.description + '</p>' + '<p>' + marker.data + " LIKES" + '</p>' + '<p>' + 'checkins:' + marker.checkinsCount + '</p>' + '</div>')
+            infowindow.setContent('<div>' + '<h3>' + marker.title + '</h3>' + '<p>' + marker.description + '</p>' + '<p>' + marker.data + " LIKES" + '</p>' + '<p>' + 'checkins:' + marker.checkinsCount + '</p>' + '</div>');
 
         }
         infowindow.open(map, marker);
@@ -210,4 +210,4 @@ var mapModel = function() {
     document.getElementById('showAll').addEventListener('click', myFunction2);
 
 
-}
+};
