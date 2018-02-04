@@ -14,7 +14,7 @@
 
 ## Project Overview
 
-we developed a single page application featuring a map of your neighborhood or a neighborhood you would like to visit. we will  added functionality to this map including highlighted locations, third-party(foursqaure) data about those locations and various ways to browse the content
+we developed a single page application featuring a map of our neighborhood. we will  added functionality to this map including highlighted locations, third-party(foursqaure) data about those locations and various ways to browse the content
 
 ## Why this Project?
 
