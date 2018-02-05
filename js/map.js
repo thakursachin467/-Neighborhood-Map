@@ -175,17 +175,28 @@ var mapModel = function() {
 
 
     };
+
+    self.clickevent = function(marker) {
+        self.apicall(marker);
+        marker.addListener('click', function() {
+            self.adddatatomarker(marker);
+
+        });
+
+    };
     //loop to alter through the click events to add info to the marker
     for (var j = 0; j < self.locations.length; j++) {
-        (function(marker) {
-            self.apicall(marker);
-            marker.addListener('click', function() {
-                self.adddatatomarker(marker);
 
-            });
+        self.clickevent(self.locations[j]);
+        /* (function(marker) {
+             self.apicall(marker);
+             marker.addListener('click', function() {
+                 self.adddatatomarker(marker);
+
+             });
 
 
-        })(self.locations[j]);
+         })(self.locations[j]); */
     }
 
     //here the contents will be added to the marker which is collected from foursqare and stored data
