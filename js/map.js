@@ -188,15 +188,7 @@ var mapModel = function() {
     for (var j = 0; j < self.locations.length; j++) {
 
         self.clickevent(self.locations[j]);
-        /* (function(marker) {
-             self.apicall(marker);
-             marker.addListener('click', function() {
-                 self.adddatatomarker(marker);
 
-             });
-
-
-         })(self.locations[j]); */
     }
 
     //here the contents will be added to the marker which is collected from foursqare and stored data
