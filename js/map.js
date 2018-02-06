@@ -85,7 +85,8 @@ var mapModel = function() {
     var self = this;
     var bounds = new google.maps.LatLngBounds();
     self.locations = [];
-
+    self.Input = ko.observable('');
+    self.choices = ko.observableArray(["apple", "orange", "banana"]);
     for (var i = 0; i < loc.length; i++) {
         var marker = new google.maps.Marker({
             position: {
@@ -102,9 +103,6 @@ var mapModel = function() {
         });
         self.locations.push(marker);
         self.locations[self.locations.length - 1];
-
-
-
     }
     //use to add the animation to bounce  the marker being clicked
     //refered link https://stackoverflow.com/questions/40739353/google-maps-animate-particular-marker-on-click
@@ -116,6 +114,26 @@ var mapModel = function() {
             marker.setAnimation(null);
         }, 2000);
     }
+
+
+    //function to call foursquare api
+    self.apicall = function(marker) {
+        $.ajax({
+            datatype: "JSON",
+            url: "https://api.foursquare.com/v2/venues/" + marker.id + "?oauth_token=N2N4Y4QP2CO4JJVJO0AALN5TJISJWPUCOOFPFAOQFBW2LB5T&v=20180127",
+            success: function(result) {
+                var mydata = result.response.venue;
+                console.log(mydata.stats.checkinsCount);
+                if (mydata.hasOwnProperty('likes')) {
+                    marker.data = mydata.likes.count;
+                    marker.checkinsCount = mydata.stats.checkinsCount;
+                }
+            }
+
+        });
+    };
+
+
     //function to show only shopping places
     function myFunction() {
         infowindow.close();
@@ -149,30 +167,19 @@ var mapModel = function() {
         }
     }
 
-    //function to call foursquare api
-    self.apicall = function(marker) {
-        $.ajax({
-            datatype: "JSON",
-            url: "https://api.foursquare.com/v2/venues/" + marker.id + "?oauth_token=N2N4Y4QP2CO4JJVJO0AALN5TJISJWPUCOOFPFAOQFBW2LB5T&v=20180127",
-            success: function(result) {
-                var mydata = result.response.venue;
-                console.log(mydata.stats.checkinsCount);
-                if (mydata.hasOwnProperty('likes')) {
-                    marker.data = mydata.likes.count;
-                    marker.checkinsCount = mydata.stats.checkinsCount;
+    self.Filter = function() {
+        infowindow.close();
+        var search = self.Input().toLowerCase();
+        for (var i = 0; i < self.locations.length; i++) {
+            if (self.locations[i].title.toLowerCase().indexOf(search) >= 0) {
+                console.log(self.locations[i].setVisible(true));
 
+            } else {
+                self.locations[i].setVisible(false);
 
-
-
-                }
             }
 
-
-
-
-        });
-
-
+        }
 
     };
 
