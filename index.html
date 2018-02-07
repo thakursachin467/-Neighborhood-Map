@@ -9,6 +9,12 @@
       <link rel="stylesheet" href="css/bootstrap/css/bootstrap.css">
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <style>
+li.list1 {
+    margin-left: 10%;
+    margin-bottom: 2%;
+}
+</style>
    </head>
    <body background="images/bgimg.jpg">
       <nav class="navbar navbar-default"  >
@@ -28,20 +34,18 @@
                <ul class="nav navbar-nav">
                   <li class="dropdown">
                      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">POPULAR PLACES TRICITY<span class="caret"></span></a>
-                     <ul class="dropdown-menu" id="list" data-bind="foreach : locations">
-                        <li> <a  href='#' data-bind="event:{click:$parent.adddatatomarker},text:title"> </a></li>
+                     <ul class="dropdown-menu ">
+                        <input type="Search" class="form-control" placeholder="Search" data-bind="value: Input, valueUpdate: 'keyup',event: {keyup: Filter}"> </input>
+                        <ul id="list" class="list-unstyled list-group" data-bind="foreach : locations">
+                           <!-- reference for hiding the element http://knockoutjs.com/documentation/visible-binding.html -->
+                        <li class="list1"><a  href='#' data-bind="visible:show,event:{click:$parent.adddatatomarker},text:title"> </a></li>
                      </ul>
                   </li>
                </ul>
+            </ul>
                <input type="button" id="shop" type="button" value="Shopping" class=" navbar-btn btn-sm" ></input>
                <input type="button" id="food" value="food" class="navbar-btn btn-sm" ></input>
                <input type="button" id="showAll" value="Show All" class="navbar-btn btn-sm"  ></input>
-               <form class="navbar-form navbar-left">
-                  <div class="form-group">
-                     <input type="Search" class="form-control" placeholder="Search" data-bind="value: Input, valueUpdate: 'keyup',event: {keyup: Filter},kendoAutoComplete: { data: choices}"> </input>
-                     
-                  </div>
-               </form>
             </div>
             <!-- /.navbar-collapse -->
          </div>
@@ -57,6 +61,6 @@
       </div>
       <script type="text/javascript" src="js/map.js" ></script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtO7ZP74l7NLZvLu_86FfW3QB0tVBJVo8&libraries=places&callback=myMap"
-         async onerror="googleError()"></script>
+         onerror="googleError()" async defer></script>
    </body>
 </html>

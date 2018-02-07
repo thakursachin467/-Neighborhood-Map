@@ -4,63 +4,72 @@ var loc = [{
         location: [30.7409173384, 76.7971969396],
         bio: 'Address: No.10, Booths, B, 35 Market Rd, Market 35 D, Sector 35D, Sector 8, Chandigarh, 160022',
         res_id: "57823cf6498e4ac40e94e786",
-        loc_type: "food"
+        loc_type: "food",
+        show:true
     },
     {
         title: 'Super Donuts',
         location: [30.71081056728752, 76.72193884849548],
         bio: 'Address:SCO 130, Phase 3B2',
         res_id: "56092f77498e5344ab6f0d9b",
-        loc_type: "food"
+        loc_type: "food",
+         show:true
     },
     {
         title: 'TGI Fridays',
         location: [30.7248164681, 76.8060579523],
         bio: 'Address: Sector, Madhya Marg, 9D, Sector 26 East, Chandigarh, 160021',
         res_id: "584c2ba16ad73d05c6750a2d",
-        loc_type: "food"
+        loc_type: "food",
+         show:true
     },
     {
         title: 'Hops n Grains',
         location: [30.6978586000, 76.8492580000],
         bio: 'Address: SCO 358,, Sector - 9, Panchkula, Haryana 134109',
         res_id: "4d1f20ec2eb1f04ded06e6c1",
-        loc_type: "food"
+        loc_type: "food",
+         show:true
     },
     {
         title: 'Elante Mall',
         location: [30.705733608371094, 76.80093012478473],
         bio: 'Industrial Area Chandigarh',
         res_id: "5114cd90e4b06bb0ed15a97f",
-        loc_type: "shopping"
+        loc_type: "shopping",
+         show:true
     },
     {
         title: 'Barbeque Nation',
         location: [30.7255055848, 76.8051684648],
         bio: 'Address:SCO 39, Madhya Marg, Sector 26, Chandigarh',
         res_id: "4bbf61eef353d13a29837e10",
-        loc_type: "food"
+        loc_type: "food",
+         show:true
     },
     {
         title: 'DLF City Centre',
         location: [30.728678782293738, 76.84499561838203],
         bio: 'IT Park Chandigarh',
         res_id: "4b40c527f964a520eaba25e3",
-        loc_type: "shopping"
+        loc_type: "shopping",
+         show:true
     },
     {
         title: 'Westside',
         location: [30.712763519968437, 76.8101270006755],
         bio: 'IIndustrial & Business Park Industrial Area Phase',
         res_id: "4d0c94e4f393224b9b2717ee",
-        loc_type: "shopping"
+        loc_type: "shopping",
+         show:true
     },
     {
         title: 'City Emporium',
         location: [30.70961016937183, 76.80099964363203],
         bio: ' 177-G, Purv Marg, Industrial Area Phase 2, Industrial Area Phase II, Chandigarh, 160002',
         res_id: "50d43c3ce4b0621a680d3bf6",
-        loc_type: "shopping"
+        loc_type: "shopping",
+         show:true
     }
 
 ];
@@ -86,7 +95,6 @@ var mapModel = function() {
     var bounds = new google.maps.LatLngBounds();
     self.locations = [];
     self.Input = ko.observable('');
-    self.choices = ko.observableArray(["apple", "orange", "banana"]);
     self.errComment = ko.observable();
     for (var i = 0; i < loc.length; i++) {
         var marker = new google.maps.Marker({
@@ -97,6 +105,7 @@ var mapModel = function() {
             map: map,
             title: loc[i].title,
             animation: google.maps.Animation.DROP,
+            show: ko.observable(loc[i].show),
             description: loc[i].bio,
             id: loc[i].res_id,
             type: loc[i].loc_type
@@ -115,6 +124,10 @@ var mapModel = function() {
             marker.setAnimation(null);
         }, 2000);
     }
+
+    function googleError() {
+    window.alert("failed to load map");
+}
 
 
     //function to call foursquare api
@@ -171,15 +184,23 @@ var mapModel = function() {
         }
     }
 
+
+
+    //function to search through the data and show the marker related to the keywords
     self.Filter = function() {
         infowindow.close();
         var search = self.Input().toLowerCase();
         for (var i = 0; i < self.locations.length; i++) {
             if (self.locations[i].title.toLowerCase().indexOf(search) >= 0) {
-                console.log(self.locations[i].setVisible(true));
+               self.locations[i].show(true);
+               self.locations[i].setVisible(true);
+                 console.log(self.locations[i].title);
+
 
             } else {
+                self.locations[i].show(false);
                 self.locations[i].setVisible(false);
+                
 
             }
 
