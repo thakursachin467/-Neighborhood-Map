@@ -87,6 +87,7 @@ var mapModel = function() {
     self.locations = [];
     self.Input = ko.observable('');
     self.choices = ko.observableArray(["apple", "orange", "banana"]);
+    self.errComment = ko.observable();
     for (var i = 0; i < loc.length; i++) {
         var marker = new google.maps.Marker({
             position: {
@@ -128,6 +129,9 @@ var mapModel = function() {
                     marker.data = mydata.likes.count;
                     marker.checkinsCount = mydata.stats.checkinsCount;
                 }
+            },
+            error: function(error) {
+                self.errComment("cannot load because " + 'error;');
             }
 
         });
