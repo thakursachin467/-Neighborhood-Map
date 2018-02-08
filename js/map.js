@@ -160,7 +160,7 @@ var mapModel = function() {
 
             }
         }
-    }
+    };
     //function to show only food items
     self.myFunction1=function() {
         infowindow.close();
@@ -176,7 +176,7 @@ var mapModel = function() {
 
             }
         }
-    }
+    };
 
     //function to show all markers
     self.myFunction2=function() {
@@ -187,7 +187,7 @@ var mapModel = function() {
 
 
         }
-    }
+    };
 
 
 
