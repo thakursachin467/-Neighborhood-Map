@@ -125,10 +125,6 @@ var mapModel = function() {
         }, 2000);
     }
 
-    function googleError() {
-    window.alert("failed to load map");
-}
-
 
     //function to call foursquare api
     self.apicall = function(marker) {
@@ -152,34 +148,43 @@ var mapModel = function() {
 
 
     //function to show only shopping places
-    function myFunction() {
+    self.myFunction=function() {
         infowindow.close();
         for (var i = 0; i < self.locations.length; i++) {
             if (loc[i].loc_type == "food") {
                 self.locations[i].setMap(null);
+                self.locations[i].show(false);
             } else {
                 self.locations[i].setMap(map);
+                self.locations[i].show(true);
+
             }
         }
     }
     //function to show only food items
-    function myFunction1() {
+    self.myFunction1=function() {
         infowindow.close();
         for (var i = 0; i < self.locations.length; i++) {
             if (loc[i].loc_type == "shopping") {
                 self.locations[i].setMap(null);
+                self.locations[i].show(false);
+
 
             } else {
                 self.locations[i].setMap(map);
+                self.locations[i].show(true);
+
             }
         }
     }
 
     //function to show all markers
-    function myFunction2() {
+    self.myFunction2=function() {
         infowindow.close();
         for (var i = 0; i < self.locations.length; i++) {
             self.locations[i].setMap(map);
+             self.locations[i].show(true);
+
 
         }
     }
@@ -236,13 +241,7 @@ var mapModel = function() {
         }
         infowindow.open(map, marker);
 
-    };
-
-
-    //HERE CLICK EVENTS ARE PERFORMED TO SORT THE LIST BASED ON SHOPPING AND FOOD 
-    document.getElementById('shop').addEventListener('click', myFunction);
-    document.getElementById('food').addEventListener('click', myFunction1);
-    document.getElementById('showAll').addEventListener('click', myFunction2);
+    };  
 
 
 };

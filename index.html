@@ -43,9 +43,11 @@ li.list1 {
                   </li>
                </ul>
             </ul>
-               <input type="button" id="shop" type="button" value="Shopping" class=" navbar-btn btn-sm" ></input>
-               <input type="button" id="food" value="food" class="navbar-btn btn-sm" ></input>
-               <input type="button" id="showAll" value="Show All" class="navbar-btn btn-sm"  ></input>
+                <!--HERE CLICK EVENTS ARE PERFORMED TO SORT THE LIST BASED ON SHOPPING AND FOOD  -->
+
+               <input type="button" id="shop" type="button" value="Shopping" class=" navbar-btn btn-sm" data-bind="click: myFunction" ></input>
+               <input type="button" id="food" value="food" class="navbar-btn btn-sm" data-bind="click: myFunction1" ></input>
+               <input type="button" id="showAll" value="Show All" class="navbar-btn btn-sm" data-bind="click: myFunction2" ></input>
             </div>
             <!-- /.navbar-collapse -->
          </div>
@@ -59,6 +61,11 @@ li.list1 {
       <div>
          <h1 data-bind="text:errComment" ></h1>
       </div>
+      <script type="text/javascript">
+         function googleError() {
+         window.alert("failed to load map");
+      }
+      </script>
       <script type="text/javascript" src="js/map.js" ></script>
       <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDtO7ZP74l7NLZvLu_86FfW3QB0tVBJVo8&libraries=places&callback=myMap"
          onerror="googleError()" async defer></script>
